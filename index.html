@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>本家智也 — Portfolio</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+JP:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="gl"></canvas>
+
+      <header class="ui">
+        <p class="logo">TOMOYA HONKE</p>
+        <nav>
+          <button class="nav-btn" data-panel="links">LINKS</button>
+        </nav>
+      </header>
+
+      <main class="ui">
+        <button id="back-btn" class="hidden">← BACK</button>
+        <p class="kicker">INDEX</p>
+        <ul id="works"></ul>
+      </main>
+
+      <footer class="ui">
+        <p class="tagline">Games・Research・More — 本家智也</p>
+        <p class="copyright">© 2026 Tomoya Honke</p>
+      </footer>
+
+      <!-- 詳細パネル -->
+      <div id="panel" class="hidden" aria-hidden="true">
+        <div id="panel-backdrop"></div>
+        <!-- 左側の画像ステージ -->
+        <div id="panel-stage" class="hidden">
+          <img id="stage-img" alt="" />
+          <div id="stage-thumbs"></div>
+        </div>
+        <aside id="panel-body">
+          <button id="panel-close" aria-label="close">×</button>
+          <p class="panel-kicker"></p>
+          <h2 class="panel-title"></h2>
+          <div class="panel-images"></div>
+          <p class="panel-desc"></p>
+          <div class="panel-tags"></div>
+          <div class="panel-links"></div>
+        </aside>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
