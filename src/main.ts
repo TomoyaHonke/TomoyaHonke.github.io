@@ -55,6 +55,7 @@ const zones: Record<string, Zone> = {
   fatebound: { origin: new THREE.Vector3(-88, 0, -8), bg: new THREE.Color(0x12060f) },
   zonediver: { origin: new THREE.Vector3(-52, 0, -50), bg: new THREE.Color(0x04100a) },
   links: { origin: new THREE.Vector3(0, 34, -14), bg: new THREE.Color(0x0b0716) },
+  now: { origin: new THREE.Vector3(48, 30, -30), bg: new THREE.Color(0x121006) },
   thesis: { origin: new THREE.Vector3(-40, 28, -64), bg: new THREE.Color(0x0a0f16) },
   mockviewer: { origin: new THREE.Vector3(46, 0, -62), bg: new THREE.Color(0x061412) },
 };
@@ -320,6 +321,43 @@ const aboutRing = new THREE.Mesh(
 aboutRing.position.copy(aboutKnot.position);
 aboutRing.rotation.x = 1.4;
 aboutGroup.add(aboutRing);
+
+// ---- NOW: 金色のパルサー(拍動するビーコン) ----
+const nowGroup = new THREE.Group();
+nowGroup.position.copy(zones.now.origin);
+scene.add(nowGroup);
+
+const nowCore = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(0.4, 1),
+  new THREE.MeshBasicMaterial({ color: 0xffe8b0 }),
+);
+nowCore.position.set(0, 1.6, -1);
+nowGroup.add(nowCore);
+
+const nowPulses: THREE.Mesh[] = [];
+for (let k = 0; k < 3; k++) {
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(1, 0.03, 8, 64),
+    new THREE.MeshBasicMaterial({
+      color: 0xffd27a,
+      transparent: true,
+      opacity: 0.5,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }),
+  );
+  ring.position.copy(nowCore.position);
+  nowGroup.add(ring);
+  nowPulses.push(ring);
+}
+
+const nowOrbit = new THREE.Mesh(
+  new THREE.TorusGeometry(2.6, 0.02, 8, 80),
+  new THREE.MeshBasicMaterial({ color: 0xffd27a, transparent: true, opacity: 0.4 }),
+);
+nowOrbit.position.copy(nowCore.position);
+nowOrbit.rotation.x = 1.2;
+nowGroup.add(nowOrbit);
 
 // ---- LINKS: 紫のネットワークグラフ ----
 const linksGroup = new THREE.Group();
@@ -749,6 +787,15 @@ function animate() {
     ring.rotation.z = t * 0.2 * (i % 2 === 0 ? 1 : -1);
   });
   diveCore.rotation.y = t * 0.5;
+
+  // NOW(拍動するリング)
+  nowPulses.forEach((ring, k) => {
+    const p = (t * 0.4 + k / nowPulses.length) % 1;
+    ring.scale.setScalar(0.4 + p * 3.2);
+    (ring.material as THREE.MeshBasicMaterial).opacity = (1 - p) * 0.5;
+  });
+  nowCore.scale.setScalar(1 + Math.sin(t * 2.4) * 0.08);
+  nowOrbit.rotation.z = t * 0.1;
 
   // ABOUT / LINKS
   aboutKnot.rotation.y = t * 0.12;

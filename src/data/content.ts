@@ -33,6 +33,17 @@ export const tree: EntryData[] = [
     color: 0xffc46a,
   },
   {
+    id: "now",
+    title: "NOW",
+    subtitle: "July 2026",
+    description:
+      "いま取り組んでいること(2026年7月時点)。\n\n・観測的宇宙論: PFS 向け模擬銀河カタログを作成中\n・Game: 『FateBound』を開発中\n・Web: このサイトを改善中",
+    tags: ["Updated 2026.07"],
+    url: null,
+    color: 0xffd27a,
+    links: [],
+  },
+  {
     id: "research",
     title: "RESEARCH",
     subtitle: "2 items",
